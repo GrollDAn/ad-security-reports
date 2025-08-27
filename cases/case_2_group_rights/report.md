@@ -28,15 +28,15 @@ _**Примечание 3: При назначении прав группе Tes
 4) Получение **hex** представление атрибута **ntSecurityDescriptor** на клиенте **ALT Workstation** в **ADMC**
 5) Получение **hex** представление атрибута **ntSecurityDescriptor** на клиенте **Windows10** с помощью скрипта в **PowerShell**:
  
- **$dn = "CN=TestGroup,CN=Users,DC=extra,DC=alt"\
-   $user = [ADSI]"LDAP://$dn"\
-   $sd = $user.psbase.ObjectSecurity\
-   $sddl = $sd.GetSecurityDescriptorSddlForm('All')\
-   $raw = New-Object System.Security.AccessControl.RawSecurityDescriptor $sddl\
-   $blob = New-Object byte[] ($raw.BinaryLength)\
-   $raw.GetBinaryForm($blob, 0)\
-   $hex = ($blob | ForEach-Object { "{0:x2}" -f $_ }) -join " "\
-   Write-Output $hex**
+  **$dn = "CN=TestGroup,CN=Users,DC=extra,DC=alt"\
+    $user = [ADSI]"LDAP://$dn"\
+    $sd = $user.psbase.ObjectSecurity\
+    $sddl = $sd.GetSecurityDescriptorSddlForm('All')\
+    $raw = New-Object System.Security.AccessControl.RawSecurityDescriptor $sddl\
+    $blob = New-Object byte[] ($raw.BinaryLength)\
+    $raw.GetBinaryForm($blob, 0)\
+    $hex = ($blob | ForEach-Object { "{0:x2}" -f $_ }) -join " "\
+    Write-Output $hex**
 
 
 ## Действия
