@@ -31,6 +31,10 @@ def extract_header(sddl):
     idx = sddl.find("(")
     return sddl[:idx] if idx != -1 else sddl
 
+def highlight(text, color):
+    """Добавляет и цвет, и Markdown-выделение"""
+    return f"{color}**{text}**{RESET}"
+
 def diff_sddl(sddl1, sddl2):
     list1 = parse_sddl(sddl1)
     list2 = parse_sddl(sddl2)
@@ -48,12 +52,12 @@ def diff_sddl(sddl1, sddl2):
 
     if header1 != header2:
         if header1 and not header2:
-            header1 = f"{RED}{header1}{RESET}"
+            header1 = highlight(header1, RED)
         elif header2 and not header1:
-            header2 = f"{GREEN}{header2}{RESET}"
+            header2 = highlight(header2, GREEN)
         else:  # оба есть, но разные
-            header1 = f"{RED}{header1}{RESET}"
-            header2 = f"{GREEN}{header2}{RESET}"
+            header1 = highlight(header1, RED)
+            header2 = highlight(header2, GREEN)
 
     table.append([header1, header2])
 
@@ -63,9 +67,9 @@ def diff_sddl(sddl1, sddl2):
         right = ace if ace in set2 else ""
 
         if left and not right:
-            left = f"{RED}{left}{RESET}"
+            left = highlight(left, RED)
         if right and not left:
-            right = f"{GREEN}{right}{RESET}"
+            right = highlight(right, GREEN)
 
         table.append([left, right])
 
